@@ -1,3 +1,19 @@
+---
+type Props = {
+  title?: string;
+  canonical?: string;
+};
+
+const { title, canonical } = Astro.props;
+
+const siteName = "Arielle’s Party Rentals";
+
+const canonicalUrl =
+  canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+
+const fullTitle = title ? `${title} | ${siteName}` : siteName;
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,7 +22,7 @@
       content="zmveyEhMfdvZ9KPMZ-K7ty12UFH329H7kO_qopPQLv4"
     />
     <!-- Primary Meta Tags -->
-    <title>Arielle’s Party Rentals | Product Page</title>
+    <title>{title ?? "Arielle's Party Rentals"}</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-52EW19DC8B"
     ></script>
@@ -30,12 +46,12 @@
           (e.init = function (i, s, a) {
             function g(t, e) {
               var o = e.split(".");
-              2 == o.length && ((t = t[o[0]]), (e = o[1])),
+              (2 == o.length && ((t = t[o[0]]), (e = o[1])),
                 (t[e] = function () {
                   t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
-                });
+                }));
             }
-            ((p = t.createElement("script")).type = "text/javascript"),
+            (((p = t.createElement("script")).type = "text/javascript"),
               (p.crossOrigin = "anonymous"),
               (p.async = !0),
               (p.src =
@@ -44,7 +60,7 @@
               (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(
                 p,
                 r
-              );
+              ));
             var u = e;
             for (
               void 0 !== a ? (u = e[a] = []) : (a = "posthog"),
@@ -52,7 +68,9 @@
                 u.toString = function (t) {
                   var e = "posthog";
                   return (
-                    "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e
+                    "posthog" !== a && (e += "." + a),
+                    t || (e += " (stub)"),
+                    e
                   );
                 },
                 u.people.toString = function () {
@@ -116,7 +134,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
     <!-- Canonical Tag -->
-    <link rel="canonical" href="https://ariellespartyrentals.com/" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
